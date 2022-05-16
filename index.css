@@ -14,8 +14,7 @@
   --accent-hover: hsl(0, 0%, 15%);
   --accent: hsl(0, 0%, 20%);
 
-  /* --accent-hover: hsl(27, 16%, 33%);
-  --accent: hsl(27, 16%, 36%); */
+  --red: hsl(0, 90%, 69%);
 
   --fs: 1rem;
   --fs-md: 1.5rem;
@@ -67,6 +66,21 @@ button:hover {
   background-color: var(--accent-hover);
 }
 
+.top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+.topTxt {
+  display: flex;
+  align-items: center;
+  font-size: var(--fs);
+  color: var(--red);
+  gap: 8px;
+}
+
 .bottom {
   position: absolute;
   transform: translateX(-50%);
@@ -80,6 +94,6 @@ button:hover {
 }
 
 .bottomTxt {
-  color: #fff;
+  color: hsl(0, 0%, 100%);
   font-size: var(--fs-md);
 }

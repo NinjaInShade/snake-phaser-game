@@ -60,8 +60,9 @@ function create() {
   playBtn.addEventListener('click', () => {
     this.scene.restart();
 
-    playBtnClicked = true;
     playBtn.innerHTML = 'Restart Game';
+    playBtnClicked = true;
+    paused = false;
   });
 
   // Worm Food Class
