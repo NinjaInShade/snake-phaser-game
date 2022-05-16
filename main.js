@@ -15,6 +15,7 @@ const config = {
 let worm;
 let food;
 let cursors;
+let paused = false;
 
 const directions = {
   UP: 0,
@@ -30,6 +31,15 @@ let playBtnClicked = false;
 
 const game = new Phaser.Game(config);
 
+// Pause / resume functionality
+document.addEventListener('keydown', function (event) {
+  if (event.key === 'Escape' || event.key === 'Esc') {
+    paused ? game.scene.resume('default') : game.scene.pause('default');
+
+    paused = !paused;
+  }
+});
+
 function preload() {
   this.load.image('background', 'assets/background.png');
 
@@ -41,12 +51,17 @@ function preload() {
 function create() {
   this.add.image(400, 300, 'background');
 
+  // Reset score
   score.innerHTML = `Total score: 0`;
 
+  // Restart/start game
+  // If playBtnClicked is false (so when game started),
+  // Update function checks if it's false and if so game doesn't run.
   playBtn.addEventListener('click', () => {
     this.scene.restart();
 
     playBtnClicked = true;
+    playBtn.innerHTML = 'Restart Game';
   });
 
   // Worm Food Class
