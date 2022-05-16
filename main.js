@@ -23,6 +23,11 @@ const directions = {
   RIGHT: 3,
 };
 
+const playBtn = document.getElementById('playBtn');
+const score = document.getElementById('score');
+
+let playBtnClicked = false;
+
 const game = new Phaser.Game(config);
 
 function preload() {
@@ -35,6 +40,14 @@ function preload() {
 
 function create() {
   this.add.image(400, 300, 'background');
+
+  score.innerHTML = `Total score: 0`;
+
+  playBtn.addEventListener('click', () => {
+    this.scene.restart();
+
+    playBtnClicked = true;
+  });
 
   // Worm Food Class
   let Food = new Phaser.Class({
@@ -54,6 +67,8 @@ function create() {
 
     eat: function () {
       this.total++;
+
+      score.innerHTML = `Total score: ${this.total}`;
     },
   });
 
@@ -144,10 +159,29 @@ function create() {
         this.tail
       );
 
-      //  Update the timer ready for the next movement
-      this.moveTime = time + this.speed;
+      //  Check to see if any of the body pieces have the same x/y as the head
+      //  If they do, the head ran into the body so update snakes "alive" status
 
-      return true;
+      let hitBody = Phaser.Actions.GetFirst(
+        this.body.getChildren(),
+        { x: this.head.x, y: this.head.y },
+        1
+      );
+
+      if (hitBody) {
+        // TODO: Add some cool die effect?
+        console.log('dead');
+        playBtn.innerHTML = 'Restart Game';
+
+        this.alive = false;
+
+        return false;
+      } else {
+        //  Update the timer ready for the next movement
+        this.moveTime = time + this.speed;
+
+        return true;
+      }
     },
 
     grow: function () {
@@ -195,7 +229,7 @@ function create() {
 }
 
 function update(time, delta) {
-  if (!worm.alive) return;
+  if (!worm.alive || !playBtnClicked) return;
 
   /**
    * Check which key is pressed, and then change the direction the worm

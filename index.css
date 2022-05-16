@@ -14,7 +14,8 @@
   --accent-hover: hsl(27, 16%, 33%);
   --accent: hsl(27, 16%, 36%);
 
-  --fs-lg: 2rem;
+  --fs: 1rem;
+  --fs-md: 1.5rem;
   --fs-lg: 3.2rem;
 }
 
@@ -61,4 +62,13 @@ button {
 button:hover {
   transition: 0.2s ease-in-out;
   background-color: var(--accent-hover);
+}
+
+#score {
+  color: #fff;
+  position: absolute;
+  transform: translateX(-50%);
+  font-size: var(--fs-md);
+  left: 50%;
+  top: 82%;
 }
