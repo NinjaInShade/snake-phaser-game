@@ -64,11 +64,19 @@ button:hover {
   background-color: var(--accent-hover);
 }
 
-#score {
-  color: #fff;
+.bottom {
   position: absolute;
   transform: translateX(-50%);
-  font-size: var(--fs-md);
   left: 50%;
   top: 82%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 800px;
+  width: 100%;
+}
+
+.bottomTxt {
+  color: #fff;
+  font-size: var(--fs-md);
 }
