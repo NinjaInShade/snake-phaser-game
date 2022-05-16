@@ -1,64 +1,64 @@
 * {
-    font-family: 'Poppins', sans-serif;
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  font-family: 'Poppins', sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 :root {
-    font-size: 16px;
+  font-size: 16px;
 
-    /* Custom vars */
-    --bg:  hsl(0, 0%, 26%);
+  /* Custom vars */
+  --bg: hsl(0, 0%, 26%);
 
-    --accent-hover: hsl(27, 16%, 33%);
-    --accent: hsl(27, 16%, 36%);
+  --accent-hover: hsl(27, 16%, 33%);
+  --accent: hsl(27, 16%, 36%);
 
-    --fs-lg: 2rem;
-    --fs-lg: 3.2rem;
+  --fs-lg: 2rem;
+  --fs-lg: 3.2rem;
 }
 
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    background: linear-gradient(180deg, var(--bg) 50%, var(--accent) 50%);
-    min-height: 100vh;
-    gap: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: linear-gradient(180deg, var(--bg) 50%, var(--accent) 50%);
+  min-height: 100vh;
+  gap: 30px;
 }
 
 h1 {
-    position: relative;
-    color : hsl(0, 0%, 100%);
-    font-size: var(--fs-lg);
+  position: relative;
+  color: hsl(0, 0%, 100%);
+  font-size: var(--fs-lg);
 }
 
 h1::before {
-    position: absolute;
-    content: "";
-    background-color: var(--accent);
-    transform: translateX(-50%) skew(320deg);
-    width: 110%;
-    z-index: -1;
-    height: 30%;
-    bottom: 8px;
-    left: 50%;
+  position: absolute;
+  content: '';
+  background-color: var(--accent);
+  transform: translateX(-50%) skew(320deg);
+  width: 110%;
+  z-index: -1;
+  height: 30%;
+  bottom: 8px;
+  left: 50%;
 }
 
 button {
-    border: none;
-    outline: none;
-    cursor: pointer;
-    font-size: var(--fs);
-    clip-path: polygon(24px 0%, 100% 0%, calc(100% - 24px) 100%, 0% 100%);
-    background-color: var(--accent);
-    color: hsl(0, 0%, 100%);
-    padding: 10px 38px 10px 40px;
-    font-weight: 500;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: var(--fs);
+  clip-path: polygon(24px 0%, 100% 0%, calc(100% - 24px) 100%, 0% 100%);
+  background-color: var(--accent);
+  color: hsl(0, 0%, 100%);
+  padding: 10px 38px 10px 40px;
+  font-weight: 500;
 }
 
 button:hover {
-    transition: 0.2s ease-in-out;
-    background-color: var(--accent-hover);
+  transition: 0.2s ease-in-out;
+  background-color: var(--accent-hover);
 }
