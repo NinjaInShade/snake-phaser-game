@@ -11,8 +11,11 @@
   /* Custom vars */
   --bg: hsl(0, 0%, 26%);
 
-  --accent-hover: hsl(27, 16%, 33%);
-  --accent: hsl(27, 16%, 36%);
+  --accent-hover: hsl(0, 0%, 15%);
+  --accent: hsl(0, 0%, 20%);
+
+  /* --accent-hover: hsl(27, 16%, 33%);
+  --accent: hsl(27, 16%, 36%); */
 
   --fs: 1rem;
   --fs-md: 1.5rem;
