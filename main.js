@@ -15,6 +15,8 @@ const config = {
 let worm;
 let food;
 let cursors;
+let eatEffect;
+let deadEffect;
 let paused = false;
 
 const directions = {
@@ -46,10 +48,23 @@ function preload() {
   this.load.image('food', 'assets/orange.png');
 
   this.load.image('body', 'assets/wormTemp.png');
+
+  this.load.audio('backgroundMusic', 'assets/bgMusic.mp3');
+  this.load.audio('eat', 'assets/eat.wav');
+  this.load.audio('dead', 'assets/dead.mp3');
 }
 
 function create() {
   this.add.image(400, 300, 'background');
+
+  // Prevent music from overlaying and being really loud
+  game.sound.stopAll();
+
+  this.bgMusic = this.sound.add('backgroundMusic', { volume: 0.03, loop: true });
+  this.bgMusic.play();
+
+  eatEffect = this.sound.add('eat', { volume: 0.2, loop: false });
+  deadEffect = this.sound.add('dead', { volume: 2, loop: false });
 
   // Reset score
   score.innerHTML = `Total score: 0`;
@@ -83,6 +98,8 @@ function create() {
 
     eat: function () {
       this.total++;
+
+      eatEffect.play();
 
       score.innerHTML = `Total score: ${this.total}`;
     },
@@ -185,8 +202,9 @@ function create() {
       );
 
       if (hitBody) {
-        // TODO: Add some cool die effect?
-        console.log('dead');
+        game.sound.stopAll();
+        deadEffect.play();
+
         playBtn.innerHTML = 'Restart Game';
 
         this.alive = false;
