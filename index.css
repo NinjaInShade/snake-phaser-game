@@ -115,7 +115,18 @@ button:hover {
   width: 100%;
 }
 
+.bottomScores {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
 .bottomTxt {
-  color: hsl(0, 0%, 100%);
+  color: hsla(0, 0%, 100%, 0.5);
   font-size: var(--fs-md);
+}
+
+#scoreTop {
+  color: hsl(0, 0%, 100%);
 }

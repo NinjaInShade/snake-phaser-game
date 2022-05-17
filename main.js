@@ -22,6 +22,8 @@ let eatEffect;
 let deadEffect;
 let paused = false;
 
+let topScore = 0;
+
 const directions = {
   UP: 0,
   DOWN: 1,
@@ -30,6 +32,7 @@ const directions = {
 };
 
 const playBtn = document.getElementById('playBtn');
+const scoreTop = document.getElementById('scoreTop');
 const score = document.getElementById('score');
 
 let playBtnClicked = false;
@@ -70,6 +73,7 @@ function create() {
   // Prevent music from overlaying and being really loud
   game.sound.stopAll();
 
+  // Initialise sound effects
   this.bgMusic = this.sound.add('backgroundMusic', { volume: 0.03, loop: true });
   this.bgMusic.play();
 
@@ -78,6 +82,14 @@ function create() {
 
   // Reset score
   score.innerHTML = `Total score: 0`;
+
+  // Top score setting (from localStorage)
+  if (localStorage.getItem('topScore')) {
+    scoreTop.innerHTML = `Top score ${localStorage.getItem('topScore')}`;
+  } else {
+    localStorage.setItem('topScore', 0);
+    scoreTop.innerHTML = `Top score: 0`;
+  }
 
   // Restart/start game
   // If playBtnClicked is false (so when game started),
@@ -110,6 +122,15 @@ function create() {
       this.total++;
 
       eatEffect.play();
+
+      // Top score updating (using localStorage)
+      if (parseInt(localStorage.getItem('topScore')) < this.total) {
+        localStorage.setItem('topScore', parseInt(localStorage.getItem('topScore')) + 1);
+
+        scoreTop.innerHTML = `Top score: ${localStorage.getItem('topScore')}`;
+      }
+
+      topScore += 1;
 
       score.innerHTML = `Total score: ${this.total}`;
     },
