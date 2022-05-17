@@ -4,10 +4,7 @@ const config = {
   type: Phaser.WEBGL,
   width: 800,
   height: 600,
-  //   backgroundColor: '#53463c', // brown board
-  //   backgroundColor: '#3C4953', // blue board
-  backgroundColor: '#3C533E', // green board
-  //   backgroundColor: '#533C3C', // Red board
+  backgroundColor: '#3b3b3b',
   scene: {
     preload: preload,
     create: create,
@@ -15,6 +12,7 @@ const config = {
   },
 };
 
+let bg;
 let worm;
 let food;
 let cursors;
@@ -35,6 +33,8 @@ const playBtn = document.getElementById('playBtn');
 const scoreTop = document.getElementById('scoreTop');
 const score = document.getElementById('score');
 
+const sideSwatchBtns = document.querySelectorAll('.sideSwatchBtn');
+
 let playBtnClicked = false;
 
 const game = new Phaser.Game(config);
@@ -49,10 +49,10 @@ document.addEventListener('keydown', function (event) {
 });
 
 function preload() {
-  //   this.load.image('background', 'assets/background.png'); // Brown board
-  //   this.load.image('background', 'assets/backgroundBlue.png'); // Blue board
-  this.load.image('background', 'assets/backgroundGreen.png'); // Green board
-  //   this.load.image('background', 'assets/backgroundRed.png'); // Red board
+  this.load.image('background', 'assets/background.png'); // Brown board
+  this.load.image('backgroundBlue', 'assets/backgroundBlue.png'); // Blue board
+  this.load.image('backgroundGreen', 'assets/backgroundGreen.png'); // Green board
+  this.load.image('backgroundRed', 'assets/backgroundRed.png'); // Red board
 
   this.load.image('food', 'assets/orange.png');
 
@@ -68,7 +68,7 @@ function preload() {
 }
 
 function create() {
-  this.add.image(400, 300, 'background');
+  this.add.image(400, 300, 'backgroundGreen');
 
   // Prevent music from overlaying and being really loud
   game.sound.stopAll();
@@ -102,6 +102,41 @@ function create() {
     paused = false;
   });
 
+  // BG Colour setting (from localStorage)
+  if (localStorage.getItem('bgColour')) {
+    this.add.image(400, 300, `background${localStorage.getItem('bgColour')}`).setDepth(0);
+
+    sideSwatchBtns.forEach((btn) => {
+      if (btn.childNodes[3].innerHTML === localStorage.getItem('bgColour')) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+  } else {
+    localStorage.setItem('bgColour', '');
+    this.add.image(400, 300, `background`).setDepth(0);
+    this.cameras.main.backgroundColor.setTo(`background`);
+  }
+
+  sideSwatchBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      localStorage.setItem('bgColour', btn.childNodes[3].innerHTML);
+
+      this.add.image(400, 300, `background${btn.childNodes[3].innerHTML}`).setDepth(0);
+
+      sideSwatchBtns.forEach((loopBtn) => {
+        loopBtn.classList.remove('active');
+      });
+
+      btn.classList.add('active');
+
+      worm.body.children.each(function (segment) {
+        segment.setDepth(2);
+      });
+    });
+  });
+
   // Worm Food Class
   let Food = new Phaser.Class({
     Extends: Phaser.GameObjects.Image,
@@ -112,6 +147,7 @@ function create() {
       this.setTexture('food');
       this.setPosition(Math.abs(x) * 20, Math.abs(y) * 20);
       this.setOrigin(0.5);
+      this.setDepth(1);
 
       this.total = 0;
 

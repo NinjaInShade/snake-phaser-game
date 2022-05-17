@@ -35,7 +35,7 @@ body {
   align-items: center;
   flex-direction: column;
   background: linear-gradient(180deg, var(--bg) 50%, var(--accent) 50%);
-  overflow-y: hidden;
+  overflow: hidden;
   height: 100vh;
   gap: 30px;
 }
@@ -71,7 +71,7 @@ h1::before {
   left: 50%;
 }
 
-button {
+button:not(.sideSwatchBtn) {
   border: none;
   outline: none;
   cursor: pointer;
@@ -83,7 +83,7 @@ button {
   font-weight: 500;
 }
 
-button:hover {
+button:not(.sideSwatchBtn):hover {
   transition: 0.2s ease-in-out;
   background-color: var(--accent-hover);
 }
@@ -101,6 +101,55 @@ button:hover {
   font-size: var(--fs);
   color: var(--red);
   gap: 8px;
+}
+
+.side {
+  position: absolute;
+  transform: rotate(90deg);
+  left: 62%;
+  top: 55%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+}
+
+.sideTxt {
+  color: hsla(0, 0%, 100%, 0.5);
+  font-size: var(--fs-md);
+}
+
+.sideBtns {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+.sideSwatch {
+  display: block;
+  width: 40px;
+  height: 40px;
+}
+
+.sideSwatchBtn {
+  border-radius: 50%;
+  cursor: pointer;
+  outline: 1px solid hsla(0, 0%, 100%, 2);
+  background: none;
+  border: none;
+}
+
+.sideSwatchBtn.active,
+.sideSwatchBtn:hover {
+  transition: 0.1s ease-in-out;
+  outline: 4px solid hsla(0, 0%, 100%, 1);
+}
+
+.sideSwatchBtnTxt {
+  position: absolute;
+  top: -99999px;
+  left: -99999px;
 }
 
 .bottom {
