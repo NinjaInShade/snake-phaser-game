@@ -115,6 +115,7 @@ function create() {
     });
   } else {
     localStorage.setItem('bgColour', '');
+    sideSwatchBtns[0].classList.add('active');
     this.add.image(400, 300, `background`).setDepth(0);
     this.cameras.main.backgroundColor.setTo(`background`);
   }
