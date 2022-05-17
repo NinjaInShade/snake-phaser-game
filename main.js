@@ -47,7 +47,8 @@ function preload() {
 
   this.load.image('food', 'assets/orange.png');
 
-  this.load.image('body', 'assets/wormTemp.png');
+  this.load.image('head', 'assets/wormHead.png');
+  this.load.image('body', 'assets/wormBody.png');
 
   this.load.audio('backgroundMusic', 'assets/bgMusic.mp3');
   this.load.audio('eat', 'assets/eat.wav');
@@ -88,8 +89,8 @@ function create() {
       Phaser.GameObjects.Image.call(this, scene);
 
       this.setTexture('food');
-      this.setPosition(x * 20, y * 20);
-      this.setOrigin(0);
+      this.setPosition(Math.abs(x) * 20, Math.abs(y) * 20);
+      this.setOrigin(0.5);
 
       this.total = 0;
 
@@ -108,12 +109,13 @@ function create() {
   // Worm Class
   let Worm = new Phaser.Class({
     initialize: function Worm(scene, x, y) {
-      this.headPosition = new Phaser.Geom.Point(x, y);
+      this.headPosition = new Phaser.Geom.Point(Math.abs(x), Math.abs(y));
 
       this.body = scene.add.group();
 
-      this.head = this.body.create(x * 20, y * 20, 'body');
-      this.head.setOrigin(0);
+      this.head = this.body.create(Math.abs(x) * 20, Math.abs(y) * 20, 'head');
+      this.head.setOrigin(0.5);
+      this.head.angle = 90;
 
       this.alive = true;
 
@@ -121,7 +123,7 @@ function create() {
 
       this.moveTime = 0;
 
-      this.tail = new Phaser.Geom.Point(x, y);
+      this.tail = new Phaser.Geom.Point(Math.abs(x), Math.abs(y));
 
       this.heading = directions.RIGHT;
       this.direction = directions.RIGHT;
@@ -135,24 +137,44 @@ function create() {
 
     faceLeft: function () {
       if (this.direction === directions.UP || this.direction === directions.DOWN) {
+        this.head.angle = 270;
+        this.body.children.each(function (segment) {
+          segment.angle = 270;
+        });
+
         this.heading = directions.LEFT;
       }
     },
 
     faceRight: function () {
       if (this.direction === directions.UP || this.direction === directions.DOWN) {
+        this.head.angle = 90;
+        this.body.children.each(function (segment) {
+          segment.angle = 90;
+        });
+
         this.heading = directions.RIGHT;
       }
     },
 
     faceUp: function () {
       if (this.direction === directions.LEFT || this.direction === directions.RIGHT) {
+        this.head.angle = 0;
+        this.body.children.each(function (segment) {
+          segment.angle = 0;
+        });
+
         this.heading = directions.UP;
       }
     },
 
     faceDown: function () {
       if (this.direction === directions.LEFT || this.direction === directions.RIGHT) {
+        this.head.angle = 180;
+        this.body.children.each(function (segment) {
+          segment.angle = 180;
+        });
+
         this.heading = directions.DOWN;
       }
     },
@@ -165,19 +187,19 @@ function create() {
        */
       switch (this.heading) {
         case directions.LEFT:
-          this.headPosition.x = Phaser.Math.Wrap(this.headPosition.x - 1, 0, 40);
+          this.headPosition.x = Phaser.Math.Wrap(Math.abs(this.headPosition.x) - 1, 0, 40);
           break;
 
         case directions.RIGHT:
-          this.headPosition.x = Phaser.Math.Wrap(this.headPosition.x + 1, 0, 40);
+          this.headPosition.x = Phaser.Math.Wrap(Math.abs(this.headPosition.x) + 1, 0, 40);
           break;
 
         case directions.UP:
-          this.headPosition.y = Phaser.Math.Wrap(this.headPosition.y - 1, 0, 30);
+          this.headPosition.y = Phaser.Math.Wrap(Math.abs(this.headPosition.y) - 1, 0, 30);
           break;
 
         case directions.DOWN:
-          this.headPosition.y = Phaser.Math.Wrap(this.headPosition.y + 1, 0, 30);
+          this.headPosition.y = Phaser.Math.Wrap(Math.abs(this.headPosition.y) + 1, 0, 30);
           break;
       }
 
@@ -186,8 +208,8 @@ function create() {
       //  Update the body segments
       Phaser.Actions.ShiftPosition(
         this.body.getChildren(),
-        this.headPosition.x * 20,
-        this.headPosition.y * 20,
+        Math.abs(this.headPosition.x) * 20,
+        Math.abs(this.headPosition.y) * 20,
         1,
         this.tail
       );
@@ -197,7 +219,7 @@ function create() {
 
       let hitBody = Phaser.Actions.GetFirst(
         this.body.getChildren(),
-        { x: this.head.x, y: this.head.y },
+        { x: Math.abs(this.head.x), y: Math.abs(this.head.y) },
         1
       );
 
@@ -221,11 +243,11 @@ function create() {
     grow: function () {
       let newPart = this.body.create(this.tail.x, this.tail.y, 'body');
 
-      newPart.setOrigin(0);
+      newPart.setOrigin(0.5, 0.5);
     },
 
     collideWithFood: function (food) {
-      if (this.head.x === food.x && this.head.y === food.y) {
+      if (Math.abs(this.head.x) === food.x && Math.abs(this.head.y === food.y)) {
         this.grow();
 
         food.eat();
@@ -244,8 +266,8 @@ function create() {
     updateGrid: function (grid) {
       //  Remove all body pieces from valid positions list
       this.body.children.each(function (segment) {
-        var bx = segment.x / 20;
-        var by = segment.y / 20;
+        var bx = Math.abs(segment.x - 10) / 20;
+        var by = Math.abs(segment.y - 10) / 20;
 
         grid[by][bx] = false;
       });
@@ -254,9 +276,9 @@ function create() {
     },
   });
 
-  food = new Food(this, 4, 4);
+  food = new Food(this, 4.5, 4.5);
 
-  worm = new Worm(this, 8, 8);
+  worm = new Worm(this, 8.5, 8.5);
 
   //  Create our keyboard controls
   cursors = this.input.keyboard.createCursorKeys();
@@ -335,7 +357,7 @@ function repositionFood() {
     var pos = Phaser.Math.RND.pick(validLocations);
 
     //  And place it
-    food.setPosition(pos.x * 20, pos.y * 20);
+    food.setPosition((pos.x + 0.5) * 20, (pos.y + 0.5) * 20);
 
     return true;
   } else {
