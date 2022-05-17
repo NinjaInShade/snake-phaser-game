@@ -26,6 +26,8 @@ const directions = {
   RIGHT: 3,
 };
 
+// TODO: ADD TAIL, RANDOM BODY SEGMENTS
+
 const playBtn = document.getElementById('playBtn');
 const score = document.getElementById('score');
 
@@ -48,7 +50,9 @@ function preload() {
   this.load.image('food', 'assets/orange.png');
 
   this.load.image('head', 'assets/wormHead.png');
-  this.load.image('body', 'assets/wormBody.png');
+  this.load.image('body1', 'assets/wormBody.png');
+  this.load.image('body2', 'assets/wormBody2.png');
+  this.load.image('body3', 'assets/wormBody3.png');
 
   this.load.audio('backgroundMusic', 'assets/bgMusic.mp3');
   this.load.audio('eat', 'assets/eat.wav');
@@ -241,7 +245,11 @@ function create() {
     },
 
     grow: function () {
-      let newPart = this.body.create(this.tail.x, this.tail.y, 'body');
+      let newPart = this.body.create(
+        this.tail.x,
+        this.tail.y,
+        `body${Math.floor(Math.random() * 3) + 1}`
+      );
 
       newPart.setOrigin(0.5, 0.5);
     },
