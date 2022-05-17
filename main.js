@@ -4,7 +4,10 @@ const config = {
   type: Phaser.WEBGL,
   width: 800,
   height: 600,
-  backgroundColor: '#53463c',
+  //   backgroundColor: '#53463c', // brown board
+  //   backgroundColor: '#3C4953', // blue board
+  backgroundColor: '#3C533E', // green board
+  //   backgroundColor: '#533C3C', // Red board
   scene: {
     preload: preload,
     create: create,
@@ -43,7 +46,10 @@ document.addEventListener('keydown', function (event) {
 });
 
 function preload() {
-  this.load.image('background', 'assets/background.png');
+  //   this.load.image('background', 'assets/background.png'); // Brown board
+  //   this.load.image('background', 'assets/backgroundBlue.png'); // Blue board
+  this.load.image('background', 'assets/backgroundGreen.png'); // Green board
+  //   this.load.image('background', 'assets/backgroundRed.png'); // Red board
 
   this.load.image('food', 'assets/orange.png');
 
@@ -250,11 +256,27 @@ function create() {
         `body${Math.floor(Math.random() * 3) + 1}`
       );
 
-      this.body.children.each(function (segment) {
-        segment.setTexture(`body${Math.floor(Math.random() * 3) + 1}`);
-      });
+      if (this.body.children.entries.length > 2) {
+        this.body.children.entries.at(-2).setTexture(`body${Math.floor(Math.random() * 3) + 1}`);
+      }
 
       this.body.children.entries.at(-1).setTexture('tail');
+
+      if (this.direction === directions.LEFT) {
+        this.body.children.entries.at(-1).angle = 270;
+      }
+
+      if (this.direction === directions.RIGHT) {
+        this.body.children.entries.at(-1).angle = 90;
+      }
+
+      if (this.direction === directions.UP) {
+        this.body.children.entries.at(-1).angle = 0;
+      }
+
+      if (this.direction === directions.DOWN) {
+        this.body.children.entries.at(-1).angle = 180;
+      }
 
       newPart.setOrigin(0.5, 0.5);
     },

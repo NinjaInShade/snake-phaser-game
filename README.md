@@ -9,6 +9,8 @@
 - Pause/Resume functionality
 - Die functionality
 - Restart game functionality
+- Random body segments
+- Unique tail/head segment
 
 ## Creds
 
