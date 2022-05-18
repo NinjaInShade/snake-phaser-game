@@ -51,6 +51,12 @@ body {
   left: 0;
 }
 
+#canvas-container {
+  position: relative;
+  width: 800px;
+  height: 600px;
+}
+
 h1 {
   font-family: 'Snake Chan';
   position: relative;
@@ -106,8 +112,8 @@ button:not(.sideSwatchBtn):hover {
 .side {
   position: absolute;
   transform: rotate(90deg);
-  left: 62%;
-  top: 55%;
+  right: -40%;
+  top: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -115,6 +121,7 @@ button:not(.sideSwatchBtn):hover {
 }
 
 .sideTxt {
+  word-wrap: normal;
   color: hsla(0, 0%, 100%, 0.5);
   font-size: var(--fs-md);
 }
@@ -153,10 +160,6 @@ button:not(.sideSwatchBtn):hover {
 }
 
 .bottom {
-  position: absolute;
-  transform: translateX(-50%);
-  left: 50%;
-  top: 82%;
   display: flex;
   justify-content: space-between;
   align-items: center;

@@ -1,9 +1,14 @@
 // One grid is 20x20
 
 const config = {
-  type: Phaser.WEBGL,
-  width: 800,
-  height: 600,
+  type: Phaser.AUTO,
+  //   width: 800,
+  //   height: 600,
+  scale: {
+    mode: Phaser.Scale.RESIZE,
+    parent: 'canvas-container',
+    autoCenter: Phaser.Scale.CENTER_BOTH,
+  },
   backgroundColor: '#3b3b3b',
   scene: {
     preload: preload,
