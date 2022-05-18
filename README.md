@@ -11,6 +11,10 @@
 - Restart game functionality
 - Random body segments
 - Unique tail/head segment
+- Top score is tracked and is persistent
+- Total score displayed
+- Background colour changable
+- Canvas/Elements resize on browser zoom in/out (not responsive, just on zoom)
 
 ## Creds
 
